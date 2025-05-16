@@ -26,6 +26,14 @@ async function run() {
 
     const userCollection = client.db("userManagementDB").collection("users");
 
+    //get single user data from data base
+    app.get("/users/:id", async (req, res) => {
+        const id = req.params.id;
+        const singleUser = {_id: new ObjectId(id)}
+        const result = await userCollection.findOne(singleUser)
+        res.send(result)
+    })
+
     //get all user from database
     app.get("/users", async (req, res) => {
         const result = await userCollection.find().toArray()
